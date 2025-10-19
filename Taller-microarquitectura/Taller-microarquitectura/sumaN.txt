@@ -1,0 +1,9 @@
+inicio |00| SET R0 , 0x05
+       |02| SET R1 , 0x00
+       |04| SET R2 , 0x01
+       |06| MOV R3 , R0
+ ciclo |08| ADD R1 , R3
+       |0a| SUB R3 , R2
+       |0c| JZ fin
+       |0e| JMP ciclo
+   fin |10| JZ fin

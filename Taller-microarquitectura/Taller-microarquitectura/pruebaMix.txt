@@ -1,0 +1,3 @@
+prueba |00| SET R0 , 0x55
+       |02| SET R1 , 0xAA
+       |04| MIX R0 , R1
