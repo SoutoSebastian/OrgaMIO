@@ -1,0 +1,44 @@
+.data
+
+alumnos:
+    # Estructura: [ID (2 bytes)][Nota (1 byte)]
+    .half 1
+    .byte 10
+    .half 8886
+    .byte 6
+    .half 3
+    .byte 9
+    .half 0              # Marca el final
+
+.text
+.globl main
+main:
+    la a0, alumnos
+    jal ra, sumar_notas_impares
+    j fin
+
+sumar_notas_impares:
+    li t0, 0             # acumulador = 0
+    mv t1, a0            # copia del puntero
+
+loop:
+    lhu t2, 0(t1)        # cargar ID
+    beq t2, zero, end    # si ID == 0, terminar
+    
+    andi t3, t2, 1       # verificar si es impar
+    beq t3, zero, next   # si es par, saltar
+    
+    lbu t4, 2(t1)        # cargar nota
+    add t0, t0, t4       # sumar nota
+
+next:
+    addi t1, t1, 3       # siguiente estructura
+    j loop
+
+end:
+    mv a0, t0            # resultado en a0
+    ret
+
+fin:
+    nop
+    j fin                # loop infinito controlado al final
